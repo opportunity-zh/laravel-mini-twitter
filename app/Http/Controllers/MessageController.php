@@ -41,7 +41,27 @@ class MessageController extends Controller
         // with the values that we got in the post-request
         $message->title = $request->title;
         $message->content = $request->content;
-   
+
+        // if we have a file in the request, we save it to the filesystem
+        // and also save the file path in the database column file_path 
+        // of the messages-table
+        if ($request->hasFile('photo')) {
+            $originalName = $request->photo->getClientOriginalName();
+            $photoPath = $request->photo->storeAs('storage/images', $originalName, 'public');
+            $message->file_path = $photoPath;  
+        }    
+
+        /* Beispiel für blob-spalte 'photo' und Spalte für file-extension: 
+        if ($request->hasFile('photo')) {
+            $path = $request->photo->path();    
+            $uploadedFile = file_get_contents($path);
+            $base64 = base64_encode($uploadedFile);
+            $message->photo = $base64;   
+            $message->extension = $request->photo->extension();
+                   
+        }        
+        */
+        
         // we save the new Message-Object in the messages
         // table in our database
         $message->save();
