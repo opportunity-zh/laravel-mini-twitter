@@ -47,7 +47,7 @@ class MessageController extends Controller
         // of the messages-table
         if ($request->hasFile('photo')) {
             $originalName = $request->photo->getClientOriginalName();
-            $photoPath = $request->photo->storeAs('storage/images', $originalName, 'public');
+            $photoPath = $request->photo->storeAs('images', $originalName, 'public');
             $message->file_path = $photoPath;  
         }    
 
