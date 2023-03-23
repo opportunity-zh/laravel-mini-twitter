@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +20,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+// messages
 Route::get('/messages', [MessageController::class, 'showAll']);
-
 Route::get('/message/{id}', [MessageController::class, 'details']);
-
 Route::delete('/message/{id}', [MessageController::class, 'delete']);
-
 Route::post('/create', [MessageController::class, 'create']);
+
+// comments
+Route::post('comment', [CommentController::class, 'addComment']);
+
 
  

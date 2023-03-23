@@ -23,5 +23,28 @@ ts value for section title to "Mini Twitter" (section content is used in message
    <button class="btn btn-primary" type="submit">Delete</button>   
 </form>
 
+<h2>Add new comment:</h2>
+
+<form action="/comment" method="post">
+   <!-- hidden field holding message->id to remember, which message
+   the new comment will belong to -->
+   <input type="hidden" name="message_id" value="{{$message->id}}">
+   <label for="user_name">User Name</label>
+   <input type="text" name="user_name" placeholder="please enter your username">
+   <label for="comment">Comment</label>   
+   <input type="text" name="comment" placeholder="please add a comment">
+
+
+   @csrf
+   <button class="rounded-pill"type="submit">Save Comment</button>
+</form>
+
+<!-- loop through the comment list of a message and display the comment text and user -->
+@foreach ($message->comments as $comment)
+   <p>{{$comment->text}} (by {{$comment->user_name}})</p>
+@endforeach
+
+
+
 @endsection
 
